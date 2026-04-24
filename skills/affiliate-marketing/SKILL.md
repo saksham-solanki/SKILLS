@@ -1,247 +1,114 @@
 ---
 name: affiliate-marketing
-description: Build and manage an affiliate marketing program. Use when the user says "affiliate program", "affiliate marketing", "affiliate partners", "referral commissions", "affiliate network", "partner program", "affiliate tracking", or asks about creating, managing, or growing an affiliate or partner program.
+description: When the user wants to plan, implement, or optimize affiliate marketing strategy. Also use when the user mentions "affiliate marketing," "affiliate program strategy," "CPS model," "affiliate recruitment," "commission structure," "affiliate partners," "affiliate network," "affiliate tracking," "affiliate commission," or "partner marketing." For affiliate page, use affiliate-page-generator.
+metadata:
+  version: 1.0.1
 ---
 
-# Affiliate Marketing Skill
+# Channels: Affiliate
 
-You are an affiliate marketing strategist. Help build, launch, and optimize affiliate programs that drive revenue through partner referrals.
+Guides affiliate marketing strategy for AI/SaaS products. Affiliate marketing uses a CPS (Cost Per Sale) model—pay only when sales occur. ROI typically 5:1 to 10:1; CAC 40%–50% lower than paid ads.
 
-## Affiliate Program Design
+**When invoking**: On **first use**, if helpful, open with 1–2 sentences on what this skill covers and why it matters, then provide the main output. On **subsequent use** or when the user asks to skip, go directly to the main output.
 
-### Commission Models
+## Initial Assessment
 
-| Model | How It Works | Best For | Typical Rate |
-|-------|-------------|----------|-------------|
-| **Revenue share** | % of each sale | SaaS, subscriptions | 15-30% recurring |
-| **Flat fee per sale** | Fixed $ per conversion | E-commerce, one-time purchases | $5-$200 |
-| **Tiered commission** | Higher % at higher volumes | Motivating top affiliates | 15-40% scaling |
-| **CPA (Cost per Action)** | Fixed $ per lead/trial | Lead gen, freemium | $5-$100 |
-| **Hybrid** | Base + bonus | Complex products | Varies |
+**Check for project context first:** If `.claude/project-context.md` or `.cursor/project-context.md` exists, read it for product, audience, and positioning.
 
-### Commission Rate Benchmarks
+Identify:
+1. **Product type**: SaaS, AI tool, subscription
+2. **Commission model**: Pay-per-sale, pay-per-lead, pay-per-click
+3. **Target affiliates**: Content creators, publishers, coupon sites
 
-| Industry | Typical Rate | Top Programs |
-|----------|-------------|-------------|
-| SaaS (B2B) | 20-30% recurring | Some offer 40-50% first year |
-| SaaS (B2C) | 15-25% recurring | 30% for annual plans |
-| E-commerce | 5-15% per sale | Up to 20% for high-margin products |
-| Online courses | 30-50% per sale | Up to 75% for affiliates with large audiences |
-| Financial services | $50-$200 per lead | Higher for premium products |
-| Hosting/domains | $50-$200 per sale | Flat fee common |
+## Commission Models
 
-### Cookie Duration
+| Model | Use | Typical Rate |
+|-------|-----|--------------|
+| **Pay-per-sale** | Most common; pay on conversion | 10%–20% |
+| **Pay-per-lead** | Lead gen (signup, form fill) | $5–50/lead |
+| **Pay-per-click** | Rare; risk of abuse | $0.01–10.50/click |
 
-How long after clicking an affiliate link is the referral tracked?
+For SaaS: Prefer pay-per-sale or pay-per-lead. Recurring commissions for subscriptions.
 
-| Duration | Use Case |
-|----------|----------|
-| 24 hours | Amazon (low, but high volume) |
-| 30 days | Standard for most programs |
-| 60-90 days | B2B with longer sales cycles |
-| 365 days | High-value products, generous programs |
-| Lifetime | First-click attribution (rare, very attractive to affiliates) |
+## Key Terms
 
-**Recommendation:** 60-90 days for B2B SaaS, 30 days for B2C/e-commerce.
+| Term | Definition |
+|------|------------|
+| **Cookie duration** | Attribution window (typically 30–90 days) |
+| **Recurring commission** | Ongoing % from subscription renewals |
+| **Sub-affiliate** | Affiliates who recruit other affiliates |
+| **Performance bonus** | Extra reward when affiliate hits sales targets |
+| **Attribution** | Linking sale to correct affiliate |
 
-## Program Setup
+## Promotion Channels
 
-### Platform Options
+- **Content creators**: Bloggers, YouTubers, podcasters, social influencers
+- **Publishers**: Media, niche sites, email newsletters
+- **Coupon/cashback**: Price-sensitive users; see **discount-marketing-strategy** for code strategy
+- **Professional affiliates**: Agencies managing multiple programs
+- **Communities**: Facebook Groups, Discord, Reddit, forums
+- **Existing customers**: Word-of-mouth via referral rewards
 
-| Platform | Best For | Pricing |
-|----------|----------|---------|
-| **PartnerStack** | B2B SaaS | $$$, enterprise |
-| **FirstPromoter** | SaaS startups | $49-$149/mo |
-| **Rewardful** | Stripe-based SaaS | $49-$299/mo |
-| **ShareASale** | E-commerce | Setup + transaction fees |
-| **Impact** | Enterprise | Custom pricing |
-| **Post Affiliate Pro** | Self-hosted | $129-$599/mo |
-| **Tapfiliate** | SaaS/e-commerce | $89-$149/mo |
-| **Custom built** | Full control | Dev time + maintenance |
+## Setup Options
 
-### Program Page Essentials
+*Product and website examples are illustrative only. No affiliation, partnership, or endorsement implied.*
 
-Your affiliate program page should include:
+| Approach | Use |
+|----------|-----|
+| **Self-build** | Forms (e.g. Google Forms); quick, low budget |
+| **Third-party** | Affiliate tracking platforms (e.g. Rewardful, Tapfiliate) for AI/SaaS |
 
-1. **Headline:** Clear value prop for affiliates
-2. **Commission structure:** Transparent rates and terms
-3. **Cookie duration:** How long referrals are tracked
-4. **Payment terms:** When and how affiliates get paid (Net 30/60)
-5. **Promotional assets:** What you provide (banners, copy, links)
-6. **Success stories:** Earnings examples from existing affiliates
-7. **FAQ:** Common questions answered
-8. **Application form:** Simple signup process
+Submit program to affiliate program directories after launch for discoverability.
 
-### Terms of Service
+## Recruitment Strategies
 
-Key terms to include:
-- Commission rates and payment schedule
-- Cookie duration and attribution model
-- Prohibited promotion methods (spam, brand bidding, misleading claims)
-- Minimum payout threshold ($50-$100)
-- Program modification rights
-- Termination conditions
-- Trademark usage guidelines
-- FTC disclosure requirements
+1. **Dedicated landing page**: Clear commission, payout terms, cookie duration, signup flow; link in nav/footer.
+2. **Partner personas**: Define 5+ personas (bloggers, YouTubers, newsletter owners, community admins); list audience fit and motivations.
+3. **Target high-influence types**: SEO content owners ranking for your keywords; reviewers/listicle sites; media buyers.
+4. **Reverse research**: Find affiliates promoting competitors; they may promote you too.
+5. **Unconventional outreach**: Competitor backlink analysis; creative outreach beyond cold email and networks.
 
-## Recruiting Affiliates
+Expect a small fraction of partners to drive most sales—quality over vanity metrics.
 
-### Affiliate Tiers
+## Implementation Flow
 
-| Tier | Profile | Commission | Support Level |
-|------|---------|-----------|--------------|
-| **Content creators** | Bloggers, YouTubers, podcasters | Standard | Self-serve |
-| **Influencers** | Social media followings | Standard + bonus | Medium touch |
-| **Review sites** | Comparison and review platforms | Standard | Self-serve |
-| **Existing customers** | Happy users who refer | Standard | Self-serve |
-| **Super affiliates** | High-volume professional affiliates | Premium | High touch |
-| **Strategic partners** | Complementary businesses | Custom | Partnership model |
+1. **Assess product fit**: Target audience size, product complexity, commission margin, tracking feasibility. SaaS subscriptions suit recurring commissions.
+2. **Design commission structure**: 20%–40% typical; cookie 60–90 days; payment cycle (e.g., 15th of month); minimum payout (e.g., $50).
+3. **Create marketing materials**: Banners, social posts, email templates; landing page with commission details and signup flow.
+4. **Recruit partners**: Publish to affiliate program directories; outreach to creators and influencers.
+5. **Monitor and optimize**: Track conversion rate, ROI, AOV; review affiliate performance; detect fraud.
 
-### Recruitment Strategies
+## Pitfalls and Prevention
 
-1. **Competitor's affiliates** — Search for "{competitor} affiliate program" and reach out to people promoting them
-2. **Content creators in your niche** — Find bloggers/YouTubers who review similar products
-3. **Your own customers** — Invite happy customers to earn by referring
-4. **Affiliate networks** — List on ShareASale, Impact, PartnerStack marketplace
-5. **Outreach campaigns** — Direct email/DM to relevant creators
+| Risk | Prevention |
+|------|------------|
+| **Affiliate fraud** | Fake clicks, self-referrals, fake conversions. Use platform fraud tools; vet affiliates; avoid auto-approve. |
+| **Brand bidding** | Affiliates bid on your brand terms in Google Ads; you pay commission for traffic you already own. Prohibit in terms; monitor paid search; use brand monitoring tools. See **paid-ads-strategy** for paid ads context. |
+| **Program terms** | Cookie length, performance bonus, sub-affiliate rules, payment threshold—set clearly in terms before launch. |
 
-### Outreach Template
+## Best Practices
 
-```
-Subject: Partner opportunity: Earn {X}% promoting {Product}
-
-Hi {Name},
-
-I noticed your {content piece/channel/blog} about {topic} — great work on {specific compliment}.
-
-We just launched our affiliate program for {Product}, which {one-sentence value prop}.
-I think it'd be a great fit for your audience because {specific reason}.
-
-Here's what we offer affiliates:
-- {X}% recurring commission
-- {Y}-day cookie window
-- Dedicated affiliate support
-- Custom landing pages and promo assets
-
-Our top affiliates earn ${X,XXX}/month. Want me to send you details?
-
-{Your name}
-```
-
-## Optimization
-
-### Key Metrics
-
-| Metric | Formula | Good | Action if Low |
-|--------|---------|------|--------------|
-| Activation rate | Active affiliates / Total affiliates | 20-30% | Improve onboarding, provide more assets |
-| Click-through rate | Clicks / Impressions | 1-5% | Better creative, more relevant placement |
-| Conversion rate | Sales / Clicks | 2-10% | Improve landing page, offer, or targeting |
-| Avg. order value | Revenue / Orders | Varies | Upsell/cross-sell offers for affiliates |
-| Revenue per affiliate | Total revenue / Active affiliates | Varies | Recruit higher-quality affiliates |
-| Payback period | Commission / Customer LTV | <6 months | Adjust rates or target higher-LTV segments |
-
-### Affiliate Activation
-
-Most affiliates sign up and do nothing. Activate them with:
-
-```
-Day 0: Welcome email + quick start guide
-Day 3: "Your first promotion" email with templates
-Day 7: Check-in email — "Need help getting started?"
-Day 14: Case study of successful affiliate
-Day 30: If no activity, "Is {Product} still a fit?" email
-```
-
-### Providing Promotional Assets
-
-| Asset | Purpose |
-|-------|---------|
-| Banner ads (multiple sizes) | Display advertising |
-| Email templates | Email marketing |
-| Social media posts | Ready-to-share content |
-| Product screenshots | Blog posts and reviews |
-| Comparison tables | Competitor comparison content |
-| Custom landing pages | Higher conversion rates |
-| Video clips / B-roll | YouTube and social video |
-| Discount codes | Exclusive offers for their audience |
-| Data sheets / one-pagers | B2B affiliate sales |
-
-## Compliance & Legal
-
-### FTC Disclosure Requirements
-
-All affiliates must disclose their financial relationship:
-
-```
-Required disclosures:
-- Blog: "This post contains affiliate links. I may earn a commission..."
-- Social: "#ad" or "#affiliate" clearly visible
-- Video: Verbal disclosure + on-screen text
-- Email: "This email contains affiliate links"
-```
-
-### Prohibited Activities
-
-Define clearly in your terms:
-- Spam (email, social, forum)
-- Brand bidding (PPC ads on your brand name)
-- Cookie stuffing or forced clicks
-- Misleading claims about the product
-- Trademark violations
-- Coupon/deal sites without permission
+- **rel=sponsored**: Tag affiliate links per Google guidelines
+- **Transparent disclosure**: Disclose affiliate relationships
+- **Recruit authentic affiliates**: Align with brand; avoid low-quality networks
+- **Diversify partners**: Multiple affiliates reduce risk
+- **SEO for affiliate content**: Affiliate content drives organic traffic
 
 ## Output Format
 
-```markdown
-# Affiliate Program Strategy: {Product}
+- **Commission model** recommendation
+- **Channel** strategy
+- **Recruitment** approach
+- **Tool** selection
+- **Checklist** for launch
 
-## Program Design
+## Related Skills
 
-| Element | Details |
-|---------|---------|
-| Commission model | {model} |
-| Commission rate | {rate} |
-| Cookie duration | {days} |
-| Payment terms | {Net 30/60} |
-| Min. payout | ${amount} |
-| Platform | {platform} |
-
-## Target Affiliates
-
-| Tier | Profile | Recruitment Strategy | Est. Count |
-|------|---------|---------------------|-----------|
-
-## Launch Plan
-
-### Week 1-2: Setup
-{Tasks}
-
-### Week 3-4: Soft Launch
-{Tasks}
-
-### Month 2-3: Recruitment
-{Tasks}
-
-### Month 4+: Optimization
-{Tasks}
-
-## Promotional Assets Needed
-{List of assets to create}
-
-## Budget
-| Item | Monthly Cost |
-|------|-------------|
-
-## Success Metrics
-| Metric | Month 3 Target | Month 6 Target |
-```
-
-## Important Notes
-
-- Affiliate programs take 3-6 months to gain traction. Be patient.
-- 80% of affiliate revenue typically comes from 20% of affiliates. Invest in your top performers.
-- Always pay affiliates on time. Late payments destroy relationships and your program's reputation.
-- Monitor for fraud: unusual click patterns, abnormal conversion spikes, brand bidding violations.
-- Affiliates promote what converts. If your conversion rate is low, fix your product/landing page before scaling the program.
-- Recurring commissions (for SaaS) are more attractive to affiliates than one-time payments and incentivize them to promote long-term.
+- **paid-ads-strategy**: Paid ads context; brand bidding monitoring; when affiliates bid on brand terms
+- **discount-marketing-strategy**: Affiliate-specific promo codes; coupon sites; code strategy
+- **affiliate-page-generator**: Landing page for affiliate signup; apply landing-page-generator principles
+- **landing-page-generator**: Generic landing page structure, CTA, conversion; applies to affiliate signup pages
+- **influencer-marketing**: Often paired; influencers can be affiliates
+- **referral-program**: User-driven referral vs. affiliate-driven
+- **directory-submission**: Directory submission complements affiliate; both drive backlinks and traffic
+- **community-forum**: Communities (Discord, Reddit, forums) as affiliate recruitment channel

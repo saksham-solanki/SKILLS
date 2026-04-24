@@ -1,237 +1,159 @@
 ---
 name: programmatic-seo
-description: When the user wants to create SEO-driven pages at scale using templates and data. Also use when the user mentions "programmatic SEO," "template pages," "pages at scale," "directory pages," "location pages," "[keyword] + [city] pages," "comparison pages," "integration pages," or "building many pages for SEO." For auditing existing SEO issues, see seo-audit.
+description: When the user wants to create SEO pages at scale using templates and data. Also use when the user mentions "programmatic SEO," "programmatic SEO pages," "template pages," "scale content," "location pages," "city pages," "comparison pages at scale," "X vs Y pages," "integration pages," "pages from data," "automated landing pages," or "programmatic landing pages." For user-facing template galleries or marketplaces (browse → use), use template-page-generator.
 metadata:
-  version: 1.0.0
+  version: 1.1.0
 ---
 
-# Programmatic SEO
+# SEO: Programmatic SEO
 
-You are an expert in programmatic SEO—building SEO-optimized pages at scale using templates and data. Your goal is to create pages that rank, provide value, and avoid thin content penalties.
+Guides programmatic SEO—creating large numbers of SEO-optimized pages automatically using templates and structured data, rather than writing each page manually. Works like a mail merge for web pages: one template + data yields hundreds or thousands of unique pages targeting long-tail keyword patterns.
 
-## Initial Assessment
+**When invoking**: On **first use**, if helpful, open with 1–2 sentences on what this skill covers and why it matters, then provide the main output. On **subsequent use** or when the user asks to skip, go directly to the main output.
 
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
+## Definition
 
-Before designing a programmatic SEO strategy, understand:
+**Programmatic SEO** = Building a single template and populating it with data from a database, API, or spreadsheet to generate hundreds or thousands of unique pages. Each page targets a long-tail keyword (e.g., "best SEO tool in [city]," "[App A] + [App B] integration").
 
-1. **Business Context**
-   - What's the product/service?
-   - Who is the target audience?
-   - What's the conversion goal for these pages?
+**Key differences from traditional SEO**: Technical (SEOs + engineers); long-tail focus; data-driven (data quality = success); automation; built for scale.
 
-2. **Opportunity Assessment**
-   - What search patterns exist?
-   - How many potential pages?
-   - What's the search volume distribution?
+## Three-Part Framework
 
-3. **Competitive Landscape**
-   - Who ranks for these terms now?
-   - What do their pages look like?
-   - Can you realistically compete?
+| Component | Role |
+|-----------|------|
+| **Templates** | Reusable page structures: layout, headings, internal links, content blocks; conditional logic for empty fields |
+| **Data** | Structured information: locations, products, prices, features—must be accurate, complete, and add genuine value |
+| **Automation** | Systems connecting data to templates; pages generated dynamically or published in bulk |
 
----
+## Template Structure (Recommended)
 
-## Core Principles
+| Section | Purpose |
+|---------|---------|
+| **Intro** | Introduction; matches user intent |
+| **Evidence block** | Data-driven content unique to each page (tables, lists, verified stats); differentiates from thin content |
+| **Decision** | Comparison, recommendation, or next steps |
+| **FAQ** | Frequently asked questions |
+| **CTA** | Call-to-action |
 
-### 1. Unique Value Per Page
-- Every page must provide value specific to that page
-- Not just swapped variables in a template
-- Maximize unique content—the more differentiated, the better
+**Evidence block** = Real, structured data per page (business listings, pricing, reviews, verified stats). Ensures each page delivers genuine value, not recycled boilerplate with swapped variables.
 
-### 2. Proprietary Data Wins
-Hierarchy of data defensibility:
-1. Proprietary (you created it)
-2. Product-derived (from your users)
-3. User-generated (your community)
-4. Licensed (exclusive access)
-5. Public (anyone can use—weakest)
+## Data Foundation
 
-### 3. Clean URL Structure
-**Always use subfolders, not subdomains**:
-- Good: `yoursite.com/templates/resume/`
-- Bad: `templates.yoursite.com/resume/`
+| Requirement | Practice |
+|-------------|----------|
+| **Provenance** | Log data sources; track origin |
+| **Freshness rules** | e.g., ratings every 90 days, prices every 30 days |
+| **First-party / licensed** | Prefer over scraped content |
+| **Clean & merge** | Deduplicate; ensure depth |
 
-### 4. Genuine Search Intent Match
-Pages must actually answer what people are searching for.
+## Ideal Use Cases
 
-### 5. Quality Over Quantity
-Better to have 100 great pages than 10,000 thin ones.
+| Use case | Example |
+|----------|---------|
+| **Location-specific pages** | "Plumber in [city]," "Best restaurants in [neighborhood]" with real local data |
+| **Product comparison** | "[Product A] vs [Product B]" with structured specs |
+| **Alternatives pages** | "[Competitor] alternatives" at scale; 50+ competitors; see **alternatives-page-generator** |
+| **Software integration** | "[App A] + [App B]" integration pages (e.g., Zapier 50K+ pages) |
+| **Free tools** | "[X] checker," "[Y] calculator," "[Z] generator" — standalone tool pages; toolkit hub; same ICP as main product; lead gen |
+| **Travel / destination** | City + attraction combinations with reviews, photos |
+| **E-commerce** | Category pages, product variations (size, color, material) |
+| **FAQ / Q&A** | Pages powered by user question databases |
+| **Salary / pricing** | Comparison pages with structured data |
 
-### 6. Avoid Google Penalties
-- No doorway pages
-- No keyword stuffing
-- No duplicate content
-- Genuine utility for users
+**Avoid when**: Site structure is weak; page differences are superficial (city/name swaps only); content requires original expertise or UGC participation.
 
----
+## Real-World Examples
 
-## The 12 Playbooks (Overview)
+*Examples are illustrative; no endorsement implied.*
 
-| Playbook | Pattern | Example |
-|----------|---------|---------|
-| Templates | "[Type] template" | "resume template" |
-| Curation | "best [category]" | "best website builders" |
-| Conversions | "[X] to [Y]" | "$10 USD to GBP" |
-| Comparisons | "[X] vs [Y]" | "webflow vs wordpress" |
-| Examples | "[type] examples" | "landing page examples" |
-| Locations | "[service] in [location]" | "dentists in austin" |
-| Personas | "[product] for [audience]" | "crm for real estate" |
-| Integrations | "[product A] [product B] integration" | "slack asana integration" |
-| Glossary | "what is [term]" | "what is pSEO" |
-| Translations | Content in multiple languages | Localized content |
-| Directory | "[category] tools" | "ai copywriting tools" |
-| Profiles | "[entity name]" | "stripe ceo" |
+| Company | Scale | Pattern |
+|---------|-------|---------|
+| **Zapier** | 50,000+ pages | "[App A] + [App B]" integration |
+| **Airbnb** | — | Location search; destination × property |
+| **Review platforms** | — | User reviews + automated comparison pages |
+| **Travel sites** | — | Destination, hotel, flight, activity pages |
+| **NomadList** | 2,000+ city pages | Cost-of-living, internet speed (dynamic data) |
+| **Semrush, Ahrefs** | 50+ free tools | SEO checker, keyword tool, backlink checker; toolkit hub + per-tool pages |
 
-**For detailed playbook implementation**: See [references/playbooks.md](references/playbooks.md)
+## Content Requirements
 
----
+| Requirement | Purpose |
+|-------------|---------|
+| **300+ words per page** | Avoid thin content penalties |
+| **Unique, verifiable data** | Each page must add meaningful page-specific content beyond simple data swaps |
+| **Evidence block** | Tables, lists, examples with real numbers/attributes on every page |
+| **Semantic HTML** | Proper structure; conditional logic to avoid empty or repetitive sections |
+| **Internal linking** | Link related programmatic pages; compounds traffic and indexation |
 
-## Choosing Your Playbook
+## Technical Considerations
 
-| If you have... | Consider... |
-|----------------|-------------|
-| Proprietary data | Directories, Profiles |
-| Product with integrations | Integrations |
-| Design/creative product | Templates, Examples |
-| Multi-segment audience | Personas |
-| Local presence | Locations |
-| Tool or utility product | Conversions |
-| Content/expertise | Glossary, Curation |
-| Competitor landscape | Comparisons |
+| Topic | Practice |
+|-------|----------|
+| **Selective indexation** | Don't index all pages; use noindex rules for low-value pages |
+| **Sitemap segmentation** | By country, language, division; manage crawl budget |
+| **URL structure** | Descriptive URLs; clean hierarchy; see **url-structure** |
+| **Schema** | JSON-LD: Product, Place, FAQ, ItemList per page type |
+| **Performance** | Caching, static generation; Core Web Vitals |
 
-You can layer multiple playbooks (e.g., "Best coworking spaces in San Diego").
+## Critical Pitfalls
 
----
+| Pitfall | Consequence |
+|---------|-------------|
+| **Thin content** | Minimal info beyond keyword; generic copy; placeholder sections → penalties |
+| **Duplicate pages** | Same content with only data swaps → thin content penalties |
+| **Index bloat** | Generating pages that should never be indexable → crawl budget waste |
+| **Large dumps** | Publishing many similar pages at once → spam signals |
+| **Filter URLs** | Using filters instead of unique URLs/titles → cannibalization |
 
-## Implementation Framework
+Pages with only a title, one paragraph, and swapped city names will not rank and may incur Google penalties.
 
-### 1. Keyword Pattern Research
+## Step-by-Step Workflow
 
-**Identify the pattern:**
-- What's the repeating structure?
-- What are the variables?
-- How many unique combinations exist?
+1. **Research** — Niche, intent; include low-volume keywords; SEO tools, question databases
+2. **Collect data** — Provenance log, freshness rules; first-party/licensed; define template fields
+3. **Choose stack** — Next.js + DB, Webflow CMS, WordPress, headless; API + template reuse
+4. **Design template** — Intro, Evidence, Decision, FAQ, CTA; schema; conditional logic
+5. **Build database** — Map fields to template slots; hide empties
+6. **Generate pages** — Descriptive URLs; optimize performance
+7. **Deploy & monitor** — Sitemaps; indexation, rankings, CTR, bounce, conversions
+8. **Optimize** — Prune weak pages; refresh data; A/B test layout, CTA
 
-**Validate demand:**
-- Aggregate search volume
-- Volume distribution (head vs. long tail)
-- Trend direction
+## Best Practices
 
-### 2. Data Requirements
+| Practice | Purpose |
+|----------|---------|
+| **Quality over scale** | Each page must provide genuinely unique, verifiable value |
+| **Launch in batches** | Small batches you can measure; avoid large dumps |
+| **Strong IA** | Internal links to related guides/categories |
+| **Visual elements** | Tables, maps, comparisons where relevant |
+| **Match intent** | Avoid generic template text; precise user intent |
 
-**Identify data sources:**
-- What data populates each page?
-- Is it first-party, scraped, licensed, public?
-- How is it updated?
+## Timeline & Expectations
 
-### 3. Template Design
-
-**Page structure:**
-- Header with target keyword
-- Unique intro (not just variables swapped)
-- Data-driven sections
-- Related pages / internal links
-- CTAs appropriate to intent
-
-**Ensuring uniqueness:**
-- Each page needs unique value
-- Conditional content based on data
-- Original insights/analysis per page
-
-### 4. Internal Linking Architecture
-
-**Hub and spoke model:**
-- Hub: Main category page
-- Spokes: Individual programmatic pages
-- Cross-links between related spokes
-
-**Avoid orphan pages:**
-- Every page reachable from main site
-- XML sitemap for all pages
-- Breadcrumbs with structured data
-
-### 5. Indexation Strategy
-
-- Prioritize high-volume patterns
-- Noindex very thin variations
-- Manage crawl budget thoughtfully
-- Separate sitemaps by page type
-
----
-
-## Quality Checks
-
-### Pre-Launch Checklist
-
-**Content quality:**
-- [ ] Each page provides unique value
-- [ ] Answers search intent
-- [ ] Readable and useful
-
-**Technical SEO:**
-- [ ] Unique titles and meta descriptions
-- [ ] Proper heading structure
-- [ ] Schema markup implemented
-- [ ] Page speed acceptable
-
-**Internal linking:**
-- [ ] Connected to site architecture
-- [ ] Related pages linked
-- [ ] No orphan pages
-
-**Indexation:**
-- [ ] In XML sitemap
-- [ ] Crawlable
-- [ ] No conflicting noindex
-
-### Post-Launch Monitoring
-
-Track: Indexation rate, Rankings, Traffic, Engagement, Conversion
-
-Watch for: Thin content warnings, Ranking drops, Manual actions, Crawl errors
-
----
-
-## Common Mistakes
-
-- **Thin content**: Just swapping city names in identical content
-- **Keyword cannibalization**: Multiple pages targeting same keyword
-- **Over-generation**: Creating pages with no search demand
-- **Poor data quality**: Outdated or incorrect information
-- **Ignoring UX**: Pages exist for Google, not users
-
----
+- **Typical time to ranking**: ~6 months
+- **Reported gains**: 40%+ traffic increases from well-designed topic clusters
+- **AI search**: Structured, data-rich content performs better in AI Overviews and citation layers
 
 ## Output Format
 
-### Strategy Document
-- Opportunity analysis
-- Implementation plan
-- Content guidelines
-
-### Page Template
-- URL structure
-- Title/meta templates
-- Content outline
-- Schema markup
-
----
-
-## Task-Specific Questions
-
-1. What keyword patterns are you targeting?
-2. What data do you have (or can acquire)?
-3. How many pages are you planning?
-4. What does your site authority look like?
-5. Who currently ranks for these terms?
-6. What's your technical stack?
-
----
+- **Template design** (Intro, Evidence, Decision, FAQ, CTA; required data fields)
+- **Data requirements** (provenance, freshness, accuracy)
+- **Internal linking** (hub-and-spoke, related pages)
+- **Indexation strategy** (selective indexation, sitemap segmentation)
+- **Checklist** for audit
 
 ## Related Skills
 
-- **seo-audit**: For auditing programmatic pages after launch
-- **schema-markup**: For adding structured data
-- **competitor-alternatives**: For comparison page frameworks
+- **template-page-generator**: Template structure; aggregation (gallery) + detail pages; programmatic template design; user-facing templates (CMS, design, vibe coding)
+- **landing-page-generator**: Conversion-focused programmatic pages; programmatic landing pages; LP structure for template CTA
+- **tools-page-generator**: Free tools pages; toolkit hub; programmatic tool pages; lead gen
+- **alternatives-page-generator**: Alternatives/comparison pages at scale; competitor brand traffic
+- **category-page-generator**: Category pages; template-based structure; faceted navigation
+- **content-strategy**: Content clusters, pillar pages; programmatic pages as cluster nodes
+- **url-structure**: URL hierarchy for programmatic pages
+- **schema-markup**: Structured data (Product, Place, FAQ, ItemList)
+- **faq-page-generator**: FAQ as programmatic page type; FAQPage schema; Q&A template structure
+- **internal-links**: Linking programmatic pages
+- **xml-sitemap**: Sitemap segmentation for large programmatic sites
+- **canonical-tag**: Duplicate/thin content handling
+- **seo-strategy**: SEO workflow; programmatic SEO as alternative strategy

@@ -1,257 +1,132 @@
 ---
 name: google-ads
-description: Write Google Ads copy and build campaign structures. Use when the user asks to create Google Ads, write ad copy for search or display, set up PPC campaigns, optimize Quality Score, choose bidding strategies, or generate responsive search ads. Trigger phrases include "Google Ads", "PPC", "search ads", "display ads", "Performance Max", "ad copy", "headlines and descriptions", "keyword match types", "ad extensions", "Quality Score".
+description: When the user wants to set up, optimize, or manage Google Ads campaigns. Also use when the user mentions "Google Ads," "Google Search Ads," "PPC," "SEM," "PMF testing with ads," "test product-market fit," "Responsive Search Ads," "RSA," "Performance Max," "Quality Score," "keyword bidding," or "Google Display/YouTube ads." For paid mix, use paid-ads-strategy.
+metadata:
+  version: 1.4.1
 ---
 
-# Google Ads Copy and Campaign Builder
+# Paid Ads: Google Ads
 
-You are an expert Google Ads strategist and copywriter. When the user asks you to create Google Ads campaigns, write ad copy, or optimize existing ads, follow this comprehensive framework.
+Guides Google Ads setup, campaign structure, keyword targeting, and optimization. Google Ads excels at high-intent search traffic; use when people actively search for your solution.
 
-## Step 1: Gather Campaign Context
+**When invoking**: On **first use**, if helpful, open with 1–2 sentences on what this skill covers and why it matters, then provide the main output. On **subsequent use** or when the user asks to skip, go directly to the main output.
 
-Before writing any ad copy, establish these fundamentals:
+## Two Modes: PMF Testing vs Conversion-Driven
 
-- **Product/Service**: What is being advertised?
-- **Target audience**: Who are we reaching?
-- **Primary goal**: Leads, sales, sign-ups, calls, store visits?
-- **Landing page URL**: Where does the ad point?
-- **Budget range**: Daily or monthly spend?
-- **Competitors**: Who else is bidding on these terms?
-- **USPs**: What makes this offer unique?
+| Mode | When | Budget | Landing page | Metrics |
+|------|------|--------|--------------|---------|
+| **PMF testing** | Pre-PMF; validate idea before building | $47–500; start small | Simple LP: headline, benefits, problem solved, CTA ("Join Waitlist," "Get Early Access") | CTR, sign-up rate, bounce rate; low CTR/high bounce = messaging/positioning issue |
+| **Conversion-driven** | PMF validated; commercialization | Scale; ROAS target | Full funnel; ad-to-page alignment | ROAS, CAC, conversion rate |
 
-If the user has not provided these, ask before proceeding.
+**PMF testing**: No full product needed. Build landing page with Unbounce, Carrd, or Webflow. Run ads to relevant search terms; measure clicks, engagement, signups. Test messaging (e.g., "Fastest App for Freelancers" vs "Simplest Time Tracker for Teams"), pricing (different price points in ads/LP), and audiences (keyword targeting, in-market). Allow 4–6 weeks for PMax learning phase. Use as learning tool, not just marketing channel.
 
-## Step 2: Keyword Strategy
+**Reference**: [Marketing Cactus – Using Google Ads to Test Product-Market Fit](https://mktcactus.com/en/using-google-ads-to-test-product-market-fit-before-launching/)
 
-### Match Types
-
-Structure keywords using all three match types:
-
-| Match Type | Syntax | Use Case |
-|---|---|---|
-| Broad match | `keyword` | Discovery, maximize reach, use with Smart Bidding |
-| Phrase match | `"keyword"` | Moderate control, captures intent variations |
-| Exact match | `[keyword]` | Tight control, highest relevance, best for proven terms |
-
-### Keyword Organization
-
-- Group keywords into tightly themed ad groups (5-15 keywords per group)
-- Each ad group should target a single intent cluster
-- Name ad groups descriptively: `[Product] - [Intent] - [Match Type]`
-
-### Negative Keywords
-
-Always include a negative keyword list. Common categories:
-
-- **Informational blockers**: free, how to, what is, tutorial, guide, DIY, reddit, youtube
-- **Job seekers**: jobs, careers, hiring, salary, internship
-- **Irrelevant modifiers**: cheap (if premium brand), used, broken, complaint
-- **Competitor brand names** (unless running a conquest campaign)
-
-Organize negatives at both campaign and ad group levels.
-
-## Step 3: Search Ad Copy
-
-### Standard Search Ad Format
+## Campaign Structure
 
 ```
-Headline 1 (max 30 characters): [Primary keyword + value prop]
-Headline 2 (max 30 characters): [Benefit or differentiator]
-Headline 3 (max 30 characters): [CTA or trust signal]
-Description 1 (max 90 characters): [Expand on value prop, include keyword naturally]
-Description 2 (max 90 characters): [Social proof, urgency, or secondary benefit]
-Display URL path 1 (max 15 characters): [Relevant keyword slug]
-Display URL path 2 (max 15 characters): [Offer or category]
+Account
+├── Campaign: Brand (Search)
+├── Campaign: Non-Brand (Search)
+├── Campaign: Competitor (Search) — optional; bid on competitor brand + "alternative"/"vs"
+├── Campaign: Retargeting (Display)
+└── Campaign: Performance Max
 ```
 
-### Copy Rules
+### Competitor Brand Keywords
 
-1. **Include the primary keyword** in Headline 1 whenever possible (improves Quality Score)
-2. **Use numbers and specifics**: "Save 40%" beats "Save Money", "5-Min Setup" beats "Easy Setup"
-3. **Include a clear CTA**: "Get Quote", "Start Free Trial", "Book Demo", "Shop Now"
-4. **Add urgency when truthful**: "Limited Time", "Ends Sunday", "Only 3 Left"
-5. **Front-load value**: Put the most compelling word first in each headline
-6. **Never exceed character limits** -- count every character including spaces
-7. **Use title case** for headlines, sentence case for descriptions
-8. **Avoid exclamation marks in headlines** (Google may disapprove)
-9. **Do not repeat the same phrase** across headlines or descriptions
+**When**: Bid on "[Competitor] alternative," "[Competitor] vs [You]" to intercept high-intent traffic. Google allows competitor terms as keywords; you cannot use competitor names in ad copy without permission.
 
-### Responsive Search Ads (RSA)
+**Landing page**: Use a **dedicated landing page** (comparison/alternatives page), not a blog article. Users searching competitor brands expect direct alternatives—a blog increases bounce; a comparison page matches intent and converts better. See **alternatives-page-generator** for structure.
 
-Provide exactly:
-- **15 headlines** (max 30 chars each)
-- **4 descriptions** (max 90 chars each)
+**Best practices**:
+- Separate campaign; exact/phrase match; add your brand as negative
+- H1 mirrors search intent (e.g., "[Competitor] vs [You]")
+- Feature comparison table; one-line differentiator; strong CTA
+- Expect lower Quality Score, higher CPC than non-brand; optimize LP relevance
 
-Pin only when necessary:
-- Pin your brand name headline to Position 1 or 2
-- Pin your strongest CTA headline to Position 2 or 3
-- Leave remaining slots unpinned to let Google optimize
+**Naming**: `GOOG_[Objective]_[Audience]_[Offer]_[Date]` (e.g., `GOOG_Search_Brand_Demo_Ongoing`)
 
-#### RSA Headline Categories (provide at least 2-3 from each):
+## Campaign Types
 
-1. **Keyword headlines**: Include exact target keyword
-2. **Benefit headlines**: What the customer gains
-3. **Feature headlines**: What the product does
-4. **Trust headlines**: Awards, ratings, years in business
-5. **CTA headlines**: Direct action phrases
-6. **Urgency headlines**: Time-sensitive offers
-7. **Price/offer headlines**: Discounts, free trials, pricing
+| Type | Best for |
+|------|----------|
+| **Search** | High-intent queries; keyword-targeted; landing page critical |
+| **Display** | Awareness; retargeting; broader reach |
+| **YouTube** | Video; awareness; consideration |
+| **Performance Max** | Automated; cross-channel; feed + search + display |
 
-#### RSA Quality Checklist
+## Performance Max (PMax) Optimization
 
-- [ ] All 15 headlines make sense standalone and in any combination
-- [ ] No two headlines are semantically identical
-- [ ] At least 3 headlines include the primary keyword or close variant
-- [ ] Ad strength indicator target: "Excellent"
-- [ ] Each description is self-contained (not dependent on a specific headline)
+**Learning period**: Run at least **6 weeks** for algorithm ramp-up. Works best as complement to Search, not replacement.
 
-## Step 4: Display Ad Copy
+**Asset groups**: Organize by *audience intent* (e.g., high-intent searchers, cart abandoners, category researchers), not product category alone. Audience signals improve CPA and ROAS vs. no signals.
 
-For Google Display Network campaigns:
+**Asset requirements** (per asset group):
+- ≥5 images (include 1200×1200)
+- ≥5 text assets (4 headlines, 5 descriptions)
+- Video when possible
+- Refresh creative regularly to maintain performance
 
-### Image Ad Copy
+**Signals**: Add remarketing lists and Customer Match to accelerate learning.
 
-- **Headline**: Max 30 characters. Bold, attention-grabbing.
-- **Long headline**: Max 90 characters. More descriptive.
-- **Description**: Max 90 characters. Support the headline with a benefit.
-- **Business name**: Max 25 characters.
-- **CTA button**: Choose from Google's options (Learn More, Shop Now, Sign Up, Get Quote, etc.)
+**Weekly health check**: Flag if brand terms &gt;30% of conversions; unexpected geo conversions; any placement &gt;15% of total spend; asset group performance below "Good."
 
-### Display Ad Best Practices
+## Keyword Strategy
 
-- Use simple, direct language (users are not searching, they are browsing)
-- Lead with a pain point or aspiration, not a feature
-- Contrast your CTA button color with the ad background
-- Provide multiple image ratios: 1.91:1 (landscape), 1:1 (square), 4:5 (portrait)
+- **Brand**: Protect brand terms; exclude from non-brand campaigns
+- **Negative keywords**: Build weekly; avoid irrelevant queries. Add **support terms** (login, forum, pricing, help) from **keyword-research**—these are existing customers, not prospects.
+- **Match types**: Broad (discovery) → Phrase → Exact (control)
 
-## Step 5: Performance Max Campaigns
+**Keyword sources**: Use **keyword-research** for keyword list, clusters, and intent. Map each cluster to a dedicated landing page; relevance improves Quality Score and lowers CPC.
 
-Performance Max requires a full asset package:
+## Quality Score Levers
 
-### Asset Requirements
+| Factor | Action |
+|--------|--------|
+| Expected CTR | Improve ad relevance; test headlines |
+| Ad relevance | Align ad copy to keyword intent |
+| Landing page | Ad-to-page alignment; fast load; mobile-friendly |
 
-| Asset | Count | Max Length |
-|---|---|---|
-| Headlines | 5-15 | 30 chars |
-| Long headlines | 1-5 | 90 chars |
-| Descriptions | 2-5 | 90 chars |
-| Images | 3+ | 1200x628, 1200x1200, 960x1200 |
-| Logos | 1+ | 1200x1200, 1200x300 |
-| Videos | 1+ | 10 sec minimum (YouTube) |
-| CTA | 1 | Select from list |
-| Business name | 1 | 25 chars |
-| Sitelinks | 4+ | 25 char headline, 35 char desc x2 |
+**Target**: Quality Score ≥6; higher = lower CPC, better ad rank. **Benchmark**: Improving Quality Score from 5 to 7 can reduce CPC by 30–50%.
 
-### Asset Group Strategy
+## Bidding Strategy
 
-- Create separate asset groups for each product/service line
-- Each asset group should have its own audience signal
-- Use custom segments (keyword-based and URL-based) for targeting
-- Add your first-party data lists as audience signals
+| Conversions/month | Strategy |
+|-------------------|----------|
+| &lt;30 | Manual CPC (smart bidding needs volume to optimize) |
+| 30–50 | Target CPA; minimum for effective smart bidding |
+| 50–100 | Target CPA |
+| 100+ | Target ROAS |
 
-## Step 6: Ad Extensions (Assets)
+**Smart bidding**: AI-powered bidding (Target CPA, Target ROAS) typically delivers better ROI than manual when conversion volume is sufficient; requires ≥30 conversions in 30 days to work effectively.
 
-Always recommend and write copy for these extensions:
+## Tracking
 
-### Sitelink Extensions
-Provide 4-8 sitelinks:
-```
-Sitelink headline (max 25 chars): [Page name]
-Description line 1 (max 35 chars): [What they'll find]
-Description line 2 (max 35 chars): [Benefit of visiting]
-Final URL: [Specific page URL]
-```
+- **Enhanced Conversions**: Server-side signals for better attribution
+- **Offline conversion imports**: B2B; CRM → Google Ads
+- **UTM**: Consistent parameters for GA4 cross-check
 
-### Callout Extensions
-Provide 4-6 callouts (max 25 chars each):
-- Highlight USPs: "Free Shipping Over $50"
-- Trust signals: "4.9 Star Rating"
-- Features: "24/7 Support"
+## Paid–Organic Cannibalization
 
-### Structured Snippets
-Choose a header and provide 3+ values:
-- Types: Brands, Courses, Destinations, Featured Hotels, Insurance Coverage, Models, Neighborhoods, Service Catalog, Shows, Styles, Types
+When you rank organically (position 4+) for a keyword and also run PPC, paid ads can absorb clicks that would go to organic. **Audit**: Cross-reference GSC organic rankings with Search Terms report. If organic ranks well, test pausing PPC on those terms to free budget for higher-impact keywords.
 
-### Call Extensions
-- Include phone number if the business accepts calls
-- Set call reporting and call schedule
+**Reference**: [Backlinko – SEO and PPC: 8 Smart Ways to Align](https://backlinko.com/seo-and-ppc)
 
-### Price Extensions
-- At least 3 items with price, description, and URL
-- Use the correct price qualifier (from, up to, average)
+## Pre-Launch Checklist
 
-### Image Extensions
-- Square (1:1) and landscape (1.91:1) images
-- Must be relevant to the ad and landing page
+- [ ] Conversion tracking tested with real conversion
+- [ ] Landing page loads &lt;3s; mobile-friendly
+- [ ] UTM parameters working
+- [ ] Negative keyword list built (include support terms from keyword-research)
+- [ ] Budget set; targeting matches audience
 
-## Step 7: Quality Score Optimization
+## Related Skills
 
-Quality Score is determined by three factors. Optimize each:
-
-### 1. Expected Click-Through Rate (CTR)
-- Include primary keyword in Headline 1
-- Use strong CTAs that create curiosity or urgency
-- Test multiple RSA variations
-- Aim for CTR above the ad position average (3-5% for search)
-
-### 2. Ad Relevance
-- One theme per ad group
-- Mirror keyword language in ad copy
-- Align ad messaging with search intent
-- Use dynamic keyword insertion sparingly: `{KeyWord:Default Text}`
-
-### 3. Landing Page Experience
-- Landing page headline must match the ad promise
-- Page must load in under 3 seconds
-- Mobile-responsive design is mandatory
-- Clear path to conversion (visible CTA above the fold)
-- Content must be relevant to the keyword and ad
-
-## Step 8: Bidding Strategy Recommendations
-
-| Goal | Recommended Strategy | When to Use |
-|---|---|---|
-| Maximize conversions | Target CPA | Mature campaigns with 30+ conversions/month |
-| Maximize revenue | Target ROAS | E-commerce with accurate conversion values |
-| Grow traffic | Maximize Clicks | New campaigns, brand awareness |
-| Top placement | Target Impression Share | Brand campaigns, competitive defense |
-| Manual control | Enhanced CPC | Low budget, learning phase |
-| Full automation | Maximize Conversions | Sufficient conversion data, flexible CPA |
-
-### Bidding Best Practices
-- Start with Maximize Conversions (no target) for new campaigns
-- Switch to Target CPA after 50+ conversions in 30 days
-- Set Target CPA at 20% above your actual average CPA, then decrease gradually
-- Never change bidding strategy and budget simultaneously
-- Allow 2 weeks of learning after any bidding change
-
-## Output Format
-
-When delivering ad copy, always present it in this structure:
-
-```
-Campaign: [Campaign Name]
-  Ad Group: [Ad Group Name]
-    Keywords: [list with match types]
-    Negative Keywords: [list]
-
-    RSA:
-      Headlines:
-        H1 (pinned to pos 1): "[text]" [XX chars]
-        H2: "[text]" [XX chars]
-        ...
-      Descriptions:
-        D1: "[text]" [XX chars]
-        D2: "[text]" [XX chars]
-        ...
-
-    Extensions:
-      Sitelinks: [list]
-      Callouts: [list]
-      Structured Snippets: [list]
-
-Bidding Recommendation: [strategy + rationale]
-Estimated Daily Budget: [range]
-```
-
-Always count and display character lengths. Flag any line that exceeds its limit. Provide at least 2 ad group variations per campaign. Include rationale for copy choices when the user is learning.
+- **pmf-strategy**: PMF validation framework; when to use PMF testing vs conversion-driven
+- **paid-ads-strategy**: Channel selection; budget allocation; ad-to-page alignment; competitor brand bidding
+- **alternatives-page-generator**: Competitor brand keyword ads → dedicated LP (not blog); comparison page structure
+- **keyword-research**: Keyword list, clusters, intent; support terms for negative keywords; PPC data feeds back SEO priority
+- **traffic-analysis**: UTM for attribution; paid–organic cannibalization audit
+- **landing-page-generator**: LP structure for paid traffic; PAA → FAQ
+- **analytics-tracking**: Conversion tracking; ROAS measurement

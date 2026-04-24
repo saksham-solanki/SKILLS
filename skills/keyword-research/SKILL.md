@@ -1,353 +1,195 @@
 ---
 name: keyword-research
-description: Perform keyword research using the SemRush API. Use when the user says "find keywords", "keyword research", "what should I rank for", "keyword ideas", "search volume", "keyword difficulty", "topic clusters", "content gaps", or asks about SEO keywords for a topic or niche.
+description: When the user wants to research keywords, find target keywords, or analyze search intent. Also use when the user mentions "keyword research," "keyword tool," "target keywords," "search volume," "search intent," "keyword difficulty," "topical map," "keyword clustering," "People Also Ask," "Google autocomplete," "autocomplete keywords," or "alphabet method." For clusters, use content-strategy.
+metadata:
+  version: 1.3.1
 ---
 
-# Keyword Research Skill
+# SEO Content: Keyword Research
 
-You are an expert SEO keyword researcher. Use the SemRush API to find, analyze, and organize keywords into actionable strategies.
+Guides keyword research for SEO: finding target keywords, assessing difficulty, understanding search intent, and building topical maps. ~95% of keywords get fewer than 10 searches/month; low-volume, high-intent terms often yield faster rankings and conversion.
 
-## Prerequisites
+**When invoking**: On **first use**, if helpful, open with 1–2 sentences on what this skill covers and why it matters, then provide the main output. On **subsequent use** or when the user asks to skip, go directly to the main output.
 
-This skill requires `SEMRUSH_API_KEY`. Check for it in environment variables or in `~/.claude/.env.global`. If not found, inform the user:
+## Initial Assessment
 
-```
-This skill requires a SemRush API key. Set it via:
-  export SEMRUSH_API_KEY=your_key_here
-Or add it to ~/.claude/.env.global
-```
+**Check for project context first:** If `.claude/project-context.md` or `.cursor/project-context.md` exists, read it for product, audience, and positioning.
 
-## SemRush API Endpoints
+Identify:
+1. **Product/service**: What you offer
+2. **Audience**: Who searches for it
+3. **Goals**: Traffic, conversions, brand
+4. **Tool access**: Google Keyword Planner, Google Trends, or SEO tools
 
-Use `curl` via the Bash tool for all API calls. The base URL is `https://api.semrush.com/`.
+## Discovery Methods
 
-### Core Endpoints
+### Base Discovery
 
-**1. Keyword Overview (phrase_all)**
-```
-https://api.semrush.com/?type=phrase_all&key={KEY}&phrase={keyword}&database={db}&export_columns=Ph,Nq,Cp,Co,Nr,Td
-```
-Columns: Ph=Keyword, Nq=Search Volume, Cp=CPC, Co=Competition, Nr=Number of Results, Td=Trend
+| Method | Purpose |
+|--------|---------|
+| **User perspective** | What pain points? What would they search? Customer language from product context |
+| **Tool expansion** | Related keywords, questions, suggestions; Google autocomplete, PAA, Related Searches |
+| **Competitor reverse** | Analyze competitor titles, H1, URL; identify topics they rank for; find gaps (#4–10 = opportunity) — see **competitor-research** |
+| **Google PAA** | People Also Ask and Related Searches; high-value signals from real user behavior |
+| **Extract from article** | When auditing existing content: extract seed keywords from title, H1, H2s, meta keywords, first 100 words; then search `"[primary keyword]"` or `"[primary keyword] related keywords"` for opportunities; use `"[primary keyword]" site:competitor.com` if competitors known |
 
-**2. Related Keywords (phrase_related)**
-```
-https://api.semrush.com/?type=phrase_related&key={KEY}&phrase={keyword}&database={db}&export_columns=Ph,Nq,Cp,Co,Nr,Td&display_limit=50
-```
+### Google Autocomplete (Long-Tail Discovery)
 
-**3. Keyword Questions (phrase_questions)**
-```
-https://api.semrush.com/?type=phrase_questions&key={KEY}&phrase={keyword}&database={db}&export_columns=Ph,Nq,Cp,Co,Nr,Td&display_limit=50
-```
+Google autocomplete reflects real user searches; suggestions only appear if queries have actual traffic. Free; often uncovers low-volume long-tail that keyword tools miss. ~70% of search traffic is long-tail; lower competition, higher conversion.
 
-**4. Domain Organic Keywords (domain_organic)**
-```
-https://api.semrush.com/?type=domain_organic&key={KEY}&domain={domain}&database={db}&export_columns=Ph,Po,Nq,Cp,Co,Tr,Tc,Nr,Td&display_limit=100
-```
-Additional columns: Po=Position, Tr=Traffic, Tc=Traffic Cost
+**Alphabet method** (seed + space + letter):
+- Type seed keyword + space + each letter: `keyword a`, `keyword b`, ... `keyword z`
+- Record relevant suggestions; repeat with numbers 0-9
+- Example: `SEO a` -> "SEO audit," "SEO agency"; `SEO b` -> "SEO basics," "SEO best practices"
 
-**5. Keyword Difficulty (phrase_kdi)**
-```
-https://api.semrush.com/?type=phrase_kdi&key={KEY}&phrase={keyword}&database={db}&export_columns=Ph,Kd
-```
-Columns: Kd=Keyword Difficulty (0-100)
+**Position variants** (seed in different positions):
+- **Prefix**: `a keyword`, `b keyword` (discover what users add before)
+- **Suffix**: `keyword a`, `keyword b` (most common; alphabet method)
+- **Middle**: `how to keyword a`, `best keyword for` (question + modifier combos)
 
-### Database Codes
-- `us` (United States - default)
-- `uk` (United Kingdom)
-- `ca` (Canada)
-- `au` (Australia)
-- `de`, `fr`, `es`, `it`, `br`, `in`, `jp`
+**Question modifiers**:
+- `how to keyword`, `what is keyword`, `why keyword`, `when to keyword`, `keyword vs`
+- `keyword for beginners`, `keyword for small business`, `keyword without`
 
-Ask the user for target market if not specified. Default to `us`.
+**Why it works**: Keyword tools filter low-volume terms; autocomplete only shows queries with real traffic. Use with PAA and Related Searches for full coverage. Categorize results by intent (informational, commercial, transactional).
 
-## Research Process
+### Incremental Discovery
 
-### Step 1: Understand the Brief
+- **User feedback**: Support, community, reviews, NPS—high-frequency questions = unmet search demand
+- **Multi-platform search**: Reddit, Quora, X (Twitter), Hacker News—real questions and discussions
 
-Ask or infer:
-- **Niche/Topic:** What is the site about?
-- **Target audience:** Who are they trying to reach?
-- **Business model:** How do they monetize? (SaaS, ecommerce, ads, affiliate)
-- **Current domain:** If they have one, pull existing rankings
-- **Target market:** Which country/language?
-- **Competitors:** Known competitors to analyze
+## Search Intent
 
-### Step 2: Seed Keyword Discovery
+| Intent | Content type | Example |
+|--------|--------------|---------|
+| **Informational** | Blog, guide, FAQ | "how to optimize sitemap" |
+| **Navigational** | Brand page | "alignify login" |
+| **Commercial** | Comparison, review | "SEO tools comparison" |
+| **Transactional** | Product, pricing | "best SEO tool pricing" |
 
-Generate 10-20 seed keywords based on the brief. Use three methods:
+### Intent Identification
 
-**Method A: Brainstorm seeds** from the topic
-- Core product/service terms
-- Problem terms ("how to fix...", "why is...")
-- Audience terms (job titles, demographics)
-- Alternative terms and synonyms
+**Modifier words** (often signal intent):
 
-**Method B: Pull competitor keywords** using `domain_organic` for 2-3 competitor domains
+| Intent | Modifiers |
+|--------|-----------|
+| Informational | "how," "what," "why," "guide," "tutorial" |
+| Commercial | "best," "compare," "vs," "review," "top" |
+| Transactional | "buy," "price," "cheap," "coupon," "free shipping" |
+| Local | Location names |
 
-**Method C: Expand seeds** using `phrase_related` and `phrase_questions` for each seed
+**SERP check**: Search the term—knowledge cards/Wiki → informational; product lists/reviews → commercial; brand sites → navigational. Broader terms often show mixed SERP. See **serp-features** for feature types.
 
-### Step 3: Analyze Each Keyword
+## Long-Tail Expansion
 
-For every keyword candidate, collect via API:
+- **Google Autocomplete**: Alphabet method, position variants, question modifiers; see above. Primary source for long-tail.
+- **Intent modifiers**: Core + "how," "best," "vs," "compare," "price"
+- **Question words**: "how to," "what is," "why," "when"
+- **Functional modifiers**: Core + "-er/-or" (e.g., "image optimizer" for tool-type queries); often higher conversion
+- **Clustering**: Group by SERP overlap (same top pages), semantic similarity, or intent.
 
-| Metric | Source | What it tells you |
-|--------|--------|-------------------|
-| Search Volume (Nq) | phrase_all | Monthly searches |
-| Keyword Difficulty (Kd) | phrase_kdi | How hard to rank (0-100) |
-| CPC (Cp) | phrase_all | Commercial value indicator |
-| Competition (Co) | phrase_all | PPC competition (0-1) |
-| Trend (Td) | phrase_all | 12-month trend data |
-| SERP Results (Nr) | phrase_all | Total competing pages |
+## Keyword Clustering & Topical Map
 
-### Step 4: Classify by Search Intent
+| Method | Use |
+|--------|-----|
+| **SERP overlap** | Keywords with overlapping top-ranking pages → same cluster |
+| **Semantic** | Group by meaning, LSI, related concepts |
+| **Intent-based** | Group by intent; separate pages if intent differs within cluster |
 
-Categorize every keyword into one of four intents:
+**Pillar–cluster** (map keywords to structure):
+- **Pillar** (Hub): Broad topic page; links to clusters
+- **Cluster** (Spoke): Focused subtopic; links back to pillar
+- Target long-tail first; then pillar. Interlink clusters within topic.
+- See **content-strategy** for full pillar-cluster planning and implementation.
 
-| Intent | Signals | Examples | Content Type |
-|--------|---------|----------|--------------|
-| **Informational** | how, what, why, guide, tutorial, tips | "how to start a blog" | Blog post, guide, video |
-| **Navigational** | brand names, specific product names, login | "semrush login" | Homepage, product page |
-| **Commercial** | best, review, comparison, vs, top, alternatives | "best SEO tools 2025" | Comparison, review, listicle |
-| **Transactional** | buy, price, discount, coupon, free trial, sign up | "semrush pricing" | Landing page, product page |
+## Evaluate & Screen
 
-**Intent classification rules:**
-- "how to" / "what is" / "why" = Informational
-- "{brand} + {feature}" = Navigational
-- "best" / "top" / "vs" / "alternative" / "review" = Commercial Investigation
-- "buy" / "price" / "discount" / "free" / "download" / "sign up" = Transactional
-- If ambiguous, check the SERP: majority blog posts = informational, majority product pages = transactional
+| Factor | Consider |
+|--------|----------|
+| **Search volume** | Monthly searches; ~100+/month typical floor; niche can relax |
+| **Keyword difficulty (KD)** | New sites target lower KD |
+| **CPC** | Higher CPC often = stronger commercial intent |
+| **SERP features** | Featured Snippet, PAA, zero-click; SERP features can satisfy intent without click—affects real traffic; see **serp-features** (Zero-Click section), **featured-snippet** |
+| **Screening order** | 1) Remove irrelevant 2) Filter very low volume 3) Assess achievability 4) Prioritize commercial/transactional |
 
-### Step 5: Build Topic Clusters
+## Product Positioning Test (SEO Fit)
 
-Organize keywords into pillar-cluster structure:
+Test if positioning is clear enough for search:
 
-```
-Pillar Page: [Broad topic keyword - high volume, high difficulty]
-  |
-  +-- Cluster 1: [Subtopic keyword group]
-  |     +-- Supporting keyword 1
-  |     +-- Supporting keyword 2
-  |     +-- Question keyword 1
-  |
-  +-- Cluster 2: [Subtopic keyword group]
-  |     +-- Supporting keyword 1
-  |     +-- Supporting keyword 2
-  |
-  +-- Cluster 3: ...
-```
+- **XXX + Function words**: Generator, Creator, Maker, Builder, Changer, Shortener, Scraper, Converter, Downloader, Translator, Extender, Summarizer, Resizer, Remover, Extractor, Recorder, Rewriter, Solver, Calculator; or Platform, Tool, Software, App, Provider, Assistant, Copilot
+- **Input + to + Output**: e.g., "image to video," "text to speech"—clear input/output signals intent
 
-**Clustering rules:**
-- Pillar: Volume > 5,000, KD 40-80, broad topic
-- Cluster head: Volume 1,000-5,000, KD 20-50, specific subtopic
-- Supporting: Volume 100-1,000, KD < 30, long-tail variations
-- Each cluster should have 3-8 supporting keywords
-- Every supporting page links back to the pillar page
+**Agent/Copilot products**: Pure native Agent hard to grow via SEO; users rarely search "agent." Release related features first (e.g., CRM, sales bot for sales agent) to build traffic, then funnel to Agent product.
 
-### Step 6: Prioritize with the KOB Score
+## Principles
 
-Calculate the Keyword Opposition to Benefit (KOB) score for prioritization:
+- **Core rule**: Someone must search it—validate with tools; avoid inventing terms
+- **Functional keywords**: Tool-type (-er/-or) often convert better; users are closer to action
+- **Multi-language**: Re-research in target language; don't translate existing lists. See **translation** for translation workflow.
 
-```
-KOB Score = (Search Volume * CTR Estimate * Business Value) / Keyword Difficulty
+## SEO–PPC Keyword Synergy
 
-Where:
-- CTR Estimate: Position 1 = 0.30, Pos 2 = 0.15, Pos 3 = 0.10 (use 0.15 as default)
-- Business Value: 3 = direct revenue keyword, 2 = consideration keyword, 1 = awareness keyword
-- Keyword Difficulty: 1-100 from SemRush (use max(KD, 1) to avoid division by zero)
-```
+Keyword research serves both SEO and Google Ads. Align both channels to avoid duplication, cannibalization, and wasted spend.
 
-**Priority tiers:**
-- KOB > 50: High priority - target first
-- KOB 20-50: Medium priority - target in months 2-3
-- KOB 5-20: Low priority - target later
-- KOB < 5: Deprioritize unless strategically important
+| Data flow | Use |
+|-----------|-----|
+| **keyword-research → google-ads** | Keyword list, clusters, intent; support terms (login, forum, pricing) → negative keywords for PPC |
+| **google-ads → keyword-research** | PPC conversion rate, Search Terms report → SEO priority; high-converting PPC terms = worth ranking organically |
+| **keyword-research → landing-page** | Clusters → dedicated LP per intent; PAA questions → FAQ sections |
+| **GSC organic rank 4+** | If you rank well organically, consider reducing/pausing PPC on those terms to avoid cannibalization |
 
-### Step 7: Find Content Gaps
+**PPC data for SEO priority**: `SEO ROI ≈ (Organic clicks × PPC conversion rate × Customer value) − SEO cost`. Use PPC conversion data to validate which keywords to pursue in organic.
 
-Compare the user's domain against competitors:
+**Reference**: [Backlinko – SEO and PPC: 8 Smart Ways to Align](https://backlinko.com/seo-and-ppc)
 
-1. Pull top 100 keywords for each competitor via `domain_organic`
-2. Identify keywords where competitors rank but user does not
-3. Filter for keywords with KOB > 20
-4. These are content gap opportunities
+## Data Sources
+
+| Source | Use |
+|--------|-----|
+| **Ahrefs** | Keywords Explorer, Site Explorer |
+| **SEMrush** | Keyword Overview, Organic Research |
+| **GSC** | Search queries, impressions, clicks |
+| **GA** | Traffic by landing page |
+| **PostHog** | Feature/search usage |
+
+## Report Workflow
+
+1. **Parse** — Read Excel/CSV, infer keyword, volume, KD, intent, etc. from headers
+2. **Enrich** — Web search, visit competitor/product pages; read `project-context.md` if present
+3. **Build** — Structure data for report
+4. **Generate** — Output report in chosen format
 
 ## Output Format
 
-Present results in this structure:
+- **Keyword list** with volume, KD, intent
+- **Keyword mapping** to pages/content
+- **Content gaps** (competitors rank, you don't)
+- **Priority** ranking for implementation
+- **Topical map** (cluster → pillar → page mapping)
 
-```markdown
-# Keyword Research Report: {Topic/Niche}
-**Date:** {date}
-**Target Market:** {country}
-**Total Keywords Found:** {count}
-**Total Monthly Search Volume:** {sum}
+### Report Structure Reference
 
-## Top 20 Keywords by KOB Score
+| Section | Content |
+|---------|---------|
+| Executive Summary | Priorities (top 3) |
+| Keyword Overview | Total keywords, primary intent, avg KD, content gaps count |
+| Keyword List | Keyword, volume, KD, intent, priority, target page |
+| Keyword Mapping | Page/URL, target keywords, status |
+| Content Gaps | Keywords competitors rank for that you don't |
+| Action Plan | Priority, action, impact, effort |
+| Appendix | Search intent reference (Informational, Commercial, Transactional, Navigational) |
 
-| # | Keyword | Volume | KD | CPC | Intent | KOB Score |
-|---|---------|--------|-----|-----|--------|-----------|
-| 1 | {keyword} | {vol} | {kd} | ${cpc} | {intent} | {kob} |
-| ... | ... | ... | ... | ... | ... | ... |
+## Related Skills
 
-## Topic Clusters
-
-### Pillar: {Pillar keyword} (Volume: {vol}, KD: {kd})
-
-| Cluster | Head Keyword | Volume | KD | Supporting Keywords |
-|---------|-------------|--------|-----|---------------------|
-| {name} | {keyword} | {vol} | {kd} | kw1, kw2, kw3 |
-
-### Content Plan
-
-| Priority | Keyword | Intent | Content Type | Est. Monthly Traffic |
-|----------|---------|--------|-------------|---------------------|
-| 1 | {keyword} | {intent} | {type} | {vol * 0.15} |
-| ... | ... | ... | ... | ... |
-
-## Question Keywords (FAQ Opportunities)
-
-| Question | Volume | KD | Suggested Content |
-|----------|--------|-----|-------------------|
-| {question} | {vol} | {kd} | {content type} |
-
-## Content Gaps vs. Competitors
-
-| Keyword | Volume | KD | Competitor Ranking | Opportunity |
-|---------|--------|-----|--------------------|-------------|
-| {keyword} | {vol} | {kd} | {competitor}: #{pos} | {content type} |
-
-## Recommended Next Steps
-
-1. {Specific action item with keyword target}
-2. ...
-```
-
-## Tips for Better Results
-
-- **Batch API calls** to conserve API credits. Query related keywords in groups.
-- **Always check trends.** A keyword with declining volume may not be worth targeting.
-- **CPC indicates money intent.** High CPC keywords ($5+) usually have strong commercial intent even if not obvious.
-- **Low KD is not always easy.** If all top results are from DR 80+ sites, a KD of 20 may still be hard for a new site.
-- **Local vs. national.** For local businesses, append city/state to seed keywords.
-- **Seasonal keywords.** Note if trends show seasonality; plan content 2-3 months before peak.
-- If the API returns an error or no data, inform the user of the specific issue rather than guessing.
-
-## Supplementary API Integrations
-
-These APIs complement SemRush and can be used as alternatives or for additional data points. They are not required if SemRush is available.
-
-### DataForSEO (Alternative/Complement to SemRush)
-
-If `DATAFORSEO_LOGIN` and `DATAFORSEO_PASSWORD` are available, use DataForSEO for keyword search volume and related data. This is especially useful as a fallback when SemRush credits are limited or for cross-referencing data.
-
-**Search Volume Endpoint:**
-
-```bash
-# Get keyword search volume data from DataForSEO
-curl -s -X POST "https://api.dataforseo.com/v3/keywords_data/google_ads/search_volume/live" \
-  -H "Authorization: Basic $(echo -n "${DATAFORSEO_LOGIN}:${DATAFORSEO_PASSWORD}" | base64)" \
-  -H "Content-Type: application/json" \
-  -d '[{"keywords": ["keyword1", "keyword2", "keyword3"], "location_code": 2840, "language_code": "en"}]'
-```
-
-**Parsing the response:**
-
-```bash
-# Extract keyword metrics from DataForSEO response
-curl -s -X POST "https://api.dataforseo.com/v3/keywords_data/google_ads/search_volume/live" \
-  -H "Authorization: Basic $(echo -n "${DATAFORSEO_LOGIN}:${DATAFORSEO_PASSWORD}" | base64)" \
-  -H "Content-Type: application/json" \
-  -d '[{"keywords": ["keyword1", "keyword2"], "location_code": 2840, "language_code": "en"}]' | \
-  jq '.tasks[0].result[] | {
-    keyword: .keyword,
-    search_volume: .search_volume,
-    competition: .competition,
-    competition_index: .competition_index,
-    cpc: .cpc,
-    monthly_searches: .monthly_searches
-  }'
-```
-
-Key fields:
-- **`search_volume`** - Average monthly search volume
-- **`competition`** - Competition level: "LOW", "MEDIUM", or "HIGH"
-- **`competition_index`** - Numeric competition score (0-100)
-- **`cpc`** - Cost per click in USD
-- **`monthly_searches`** - Array of 12 monthly volume data points (useful for identifying seasonal trends)
-
-**Common location codes:**
-- `2840` - United States
-- `2826` - United Kingdom
-- `2124` - Canada
-- `2036` - Australia
-- `2250` - France
-- `2158` - Germany
-
-**Keyword Suggestions Endpoint:**
-
-```bash
-# Get keyword suggestions (similar to SemRush phrase_related)
-curl -s -X POST "https://api.dataforseo.com/v3/keywords_data/google_ads/keywords_for_keywords/live" \
-  -H "Authorization: Basic $(echo -n "${DATAFORSEO_LOGIN}:${DATAFORSEO_PASSWORD}" | base64)" \
-  -H "Content-Type: application/json" \
-  -d '[{"keywords": ["seed keyword"], "location_code": 2840, "language_code": "en", "sort_by": "search_volume"}]'
-```
-
-**When to use DataForSEO vs SemRush:**
-- Use **SemRush** as the primary source for keyword difficulty, competitor analysis, and domain organic keywords
-- Use **DataForSEO** for bulk search volume lookups (supports up to 700 keywords per request, more cost-effective for large batches)
-- Use **DataForSEO** when you need Google Ads-aligned data (their data comes directly from Google Keyword Planner)
-- Cross-reference both sources when search volume numbers differ significantly
-
-### SerpAPI (People Also Ask & Related Searches)
-
-If `SERPAPI_API_KEY` is available, use SerpAPI to extract "People Also Ask" questions and related searches directly from Google SERPs. This data is not available from SemRush and is valuable for FAQ sections and content ideation.
-
-**Search Endpoint:**
-
-```bash
-# Get SERP data including People Also Ask and related searches
-curl -s "https://serpapi.com/search.json?q={keyword}&api_key=${SERPAPI_API_KEY}&num=10"
-```
-
-**Parsing People Also Ask:**
-
-```bash
-# Extract People Also Ask questions
-curl -s "https://serpapi.com/search.json?q={keyword}&api_key=${SERPAPI_API_KEY}&num=10" | \
-  jq -r '.related_questions[] | {
-    question: .question,
-    snippet: .snippet,
-    link: .link,
-    title: .title
-  }'
-```
-
-Key response sections:
-- **`related_questions`** - Array of "People Also Ask" questions with snippets and source URLs
-- **`related_searches`** - Array of related search queries that Google suggests
-- **`organic_results`** - Top 10 organic results (useful for SERP analysis)
-
-**Parsing Related Searches:**
-
-```bash
-# Extract related searches for content ideation
-curl -s "https://serpapi.com/search.json?q={keyword}&api_key=${SERPAPI_API_KEY}&num=10" | \
-  jq -r '.related_searches[] | .query'
-```
-
-**How to use SerpAPI data in keyword research:**
-
-1. **FAQ content:** Use "People Also Ask" questions directly as H2/H3 headings in blog posts or as FAQ schema entries. These are questions Google already associates with the keyword.
-2. **Content gap discovery:** If a PAA question has a weak snippet answer (short, vague, or from a low-authority site), that is an opportunity to write a better answer and win the featured snippet.
-3. **Keyword expansion:** Related searches are Google's own suggestions for related topics. Add these to your keyword list and check their volume via SemRush or DataForSEO.
-4. **Search intent validation:** The organic results show what content types Google ranks for this keyword. If all top 10 are blog posts, write a blog post. If they are product pages, a blog post will not rank.
-5. **Cluster building:** Group PAA questions and related searches by subtopic to identify natural content clusters.
-
-**Additional SerpAPI parameters:**
-- `location=United+States` - Geo-target the search
-- `gl=us` - Country code for Google domain
-- `hl=en` - Interface language
-- `device=desktop` or `device=mobile` - Desktop vs mobile SERPs (mobile may show different PAA questions)
-
-**Note:** SerpAPI charges per search. Use it strategically for your highest-priority keywords rather than for bulk research. Pair it with SemRush for volume data and DataForSEO for bulk lookups.
+- **seo-strategy**: SEO workflow, Product-Led SEO, audit approach; keyword research is Content phase
+- **google-ads**: Keywords inform Search targeting; PPC data feeds back into SEO priority
+- **paid-ads-strategy**: When to use paid vs organic; channel selection
+- **content-strategy**: Keywords inform content plan; topic clusters
+- **content-optimization**: Keyword placement, density vs stuffing, H2 keywords
+- **title-tag, meta-description**: Keywords in title, description
+- **heading-structure**: Keywords in H1, H2
+- **link-building**: Keywords inform link targets
+- **serp-features**: SERP features in keyword screening; PAA, Featured Snippet
+- **featured-snippet**: Snippet-worthy query targeting
+- **competitor-research**: Competitor keyword/topic analysis; reverse engineering
+- **faq-page-generator**: PAA questions to FAQ sections; question-based keyword to FAQ content

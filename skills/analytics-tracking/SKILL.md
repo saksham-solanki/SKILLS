@@ -1,308 +1,155 @@
 ---
 name: analytics-tracking
-description: When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions "set up tracking," "GA4," "Google Analytics," "conversion tracking," "event tracking," "UTM parameters," "tag manager," "GTM," "analytics implementation," or "tracking plan." For A/B test measurement, see ab-test-setup.
+description: When the user wants to set up, audit, or optimize analytics tracking (GA4, events, conversions). Also use when the user mentions "Google Analytics," "GA4," "event tracking," "conversions," "attribution model," "gtag," "data layer," "GA4 setup," "conversion tracking," "event setup," "User ID tracking," or "CTA attribution." For traffic insights, use traffic-analysis.
 metadata:
-  version: 1.0.0
+  version: 1.3.1
 ---
 
-# Analytics Tracking
+# Analytics: Tracking
 
-You are an expert in analytics implementation and measurement. Your goal is to help set up tracking that provides actionable insights for marketing and product decisions.
+Guides analytics implementation: GA4 setup, event tracking, conversions, and data quality. Applies to web and app tracking across marketing channels.
 
-## Initial Assessment
+**When invoking**: On **first use**, if helpful, open with 1-2 sentences on what this skill covers and why it matters, then provide the main output. On **subsequent use** or when the user asks to skip, go directly to the main output.
 
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
+## User ID
 
-Before implementing tracking, understand:
+- **Purpose**: Cross-device, cross-session user identification
+- **Implementation**: Set `user_id` when user is identified (e.g., login); send to GA4
+- **Benefit**: Accurate attribution across sessions; better audience building
 
-1. **Business Context** - What decisions will this data inform? What are key conversions?
-2. **Current State** - What tracking exists? What tools are in use?
-3. **Technical Context** - What's the tech stack? Any privacy/compliance requirements?
+## CTA Attribution (Article ROI)
 
----
+Track CTA clicks on key articles to measure content ROI:
 
-## Core Principles
+| Action | Purpose |
+|--------|---------|
+| **Event per CTA** | e.g., `cta_click` with `content_url`, `content_type` |
+| **Conversion** | Mark as conversion in GA4 for attribution |
+| **Use** | Compare high vs low performers; optimize CTA placement and copy |
 
-### 1. Track for Decisions, Not Data
-- Every event should inform a decision
-- Avoid vanity metrics
-- Quality > quantity of events
+See **seo-monitoring** for article database and benchmark context.
 
-### 2. Start with the Questions
-- What do you need to know?
-- What actions will you take based on this data?
-- Work backwards to what you need to track
-
-### 3. Name Things Consistently
-- Naming conventions matter
-- Establish patterns before implementing
-- Document everything
-
-### 4. Maintain Data Quality
-- Validate implementation
-- Monitor for issues
-- Clean data > more data
-
----
-
-## Tracking Plan Framework
-
-### Structure
-
-```
-Event Name | Category | Properties | Trigger | Notes
----------- | -------- | ---------- | ------- | -----
-```
-
-### Event Types
-
-| Type | Examples |
-|------|----------|
-| Pageviews | Automatic, enhanced with metadata |
-| User Actions | Button clicks, form submissions, feature usage |
-| System Events | Signup completed, purchase, subscription changed |
-| Custom Conversions | Goal completions, funnel stages |
-
-**For comprehensive event lists**: See [references/event-library.md](references/event-library.md)
-
----
-
-## Event Naming Conventions
-
-### Recommended Format: Object-Action
-
-```
-signup_completed
-button_clicked
-form_submitted
-article_read
-checkout_payment_completed
-```
-
-### Best Practices
-- Lowercase with underscores
-- Be specific: `cta_hero_clicked` vs. `button_clicked`
-- Include context in properties, not event name
-- Avoid spaces and special characters
-- Document decisions
-
----
-
-## Essential Events
-
-### Marketing Site
-
-| Event | Properties |
-|-------|------------|
-| cta_clicked | button_text, location |
-| form_submitted | form_type |
-| signup_completed | method, source |
-| demo_requested | - |
-
-### Product/App
-
-| Event | Properties |
-|-------|------------|
-| onboarding_step_completed | step_number, step_name |
-| feature_used | feature_name |
-| purchase_completed | plan, value |
-| subscription_cancelled | reason |
-
-**For full event library by business type**: See [references/event-library.md](references/event-library.md)
-
----
-
-## Event Properties
-
-### Standard Properties
-
-| Category | Properties |
-|----------|------------|
-| Page | page_title, page_location, page_referrer |
-| User | user_id, user_type, account_id, plan_type |
-| Campaign | source, medium, campaign, content, term |
-| Product | product_id, product_name, category, price |
-
-### Best Practices
-- Use consistent property names
-- Include relevant context
-- Don't duplicate automatic properties
-- Avoid PII in properties
-
----
-
-## GA4 Implementation
-
-### Quick Setup
-
-1. Create GA4 property and data stream
-2. Install gtag.js or GTM
-3. Enable enhanced measurement
-4. Configure custom events
-5. Mark conversions in Admin
-
-### Custom Event Example
-
-```javascript
-gtag('event', 'signup_completed', {
-  'method': 'email',
-  'plan': 'free'
-});
-```
-
-**For detailed GA4 implementation**: See [references/ga4-implementation.md](references/ga4-implementation.md)
-
----
-
-## Google Tag Manager
-
-### Container Structure
+## Infrastructure Requirements
 
 | Component | Purpose |
 |-----------|---------|
-| Tags | Code that executes (GA4, pixels) |
-| Triggers | When tags fire (page view, click) |
-| Variables | Dynamic values (click text, data layer) |
+| **Data warehouse** | Centralized data; BI reporting |
+| **Event tracking** | User behavior; funnel mapping |
+| **Attribution** | Ad pixels; attribution model; impression-to-sale tracking |
 
-### Data Layer Pattern
+**Optimization flow**: Clean UTM + conversion events → attribution reports → optimize channel mix.
+
+## Scope
+
+- **GA4**: Web data stream, gtag.js, configuration
+- **User ID**: Cross-device, cross-session identification
+- **CTA attribution**: Per-article conversion tracking for content ROI
+- **Events**: Recommended and custom events
+- **Conversions**: Key events, parameters
+- **Quality**: Naming, testing, validation
+
+## GA4 Setup
+
+### Prerequisites
+
+- Google Analytics property and web data stream
+- Google tag (gtag.js) on all pages
+- Measurement ID (e.g., `G-XXXXXXXXXX`)
+
+### Enhanced Measurement
+
+Enable in Admin > Data Streams > Enhanced Measurement for automatic tracking of:
+
+- Page views, scrolls, outbound clicks
+- Site search, file downloads
+- Video engagement (YouTube)
+
+## Event Tracking
+
+### Event Types
+
+| Type | Description |
+|------|-------------|
+| **Automatically collected** | page_view, first_visit, session_start |
+| **Enhanced measurement** | scroll, click, file_download, etc. |
+| **Recommended** | purchase, sign_up, search, etc. |
+| **Custom** | Business-specific actions |
+
+### Naming Conventions
+
+- **Length**: <=40 characters (GA4 hard limit; longer names are not logged)
+- **Format**: `snake_case`, lowercase
+- **Verb first**: `download_pdf`, `submit_form`, `video_play`
+- **Context**: `pricing_page_scroll` vs generic `scroll`
+
+### gtag.js Syntax
 
 ```javascript
-dataLayer.push({
-  'event': 'form_submitted',
-  'form_name': 'contact',
-  'form_location': 'footer'
+gtag('event', '<event_name>', {
+  <parameter_name>: <value>,
+  // e.g. value: 99.99, currency: 'USD'
 });
 ```
 
-**For detailed GTM implementation**: See [references/gtm-implementation.md](references/gtm-implementation.md)
+Place below the Google tag snippet. Events fire on page load or user action (e.g., button click).
 
----
+### Recommended Events
 
-## UTM Parameter Strategy
+| Event | Use | Key Parameters |
+|-------|-----|----------------|
+| `purchase` | E-commerce | value, currency, items |
+| `sign_up` | Registration | method |
+| `login` | Login | method |
+| `search` | Site search | search_term |
+| `view_item` | Product view | items |
+| `add_to_cart` | Add to cart | items |
 
-### Standard Parameters
+### Custom Events
 
-| Parameter | Purpose | Example |
-|-----------|---------|---------|
-| utm_source | Traffic source | google, newsletter |
-| utm_medium | Marketing medium | cpc, email, social |
-| utm_campaign | Campaign name | spring_sale |
-| utm_content | Differentiate versions | hero_cta |
-| utm_term | Paid search keywords | running+shoes |
+- Focus on 15-25 meaningful events aligned with KPIs
+- Add parameters for context (e.g., `content_type`, `item_id`)
+- Avoid tracking everything; prioritize quality over quantity
 
-### Naming Conventions
-- Lowercase everything
-- Use underscores or hyphens consistently
-- Be specific but concise: `blog_footer_cta`, not `cta1`
-- Document all UTMs in a spreadsheet
+## Conversions (Key Events)
 
----
+- Mark important events as conversions in GA4 Admin
+- Use for attribution, audiences, and reporting
+- Typical: purchase, sign_up, lead, contact
 
-## Debugging and Validation
+## Attribution & Conversion Optimization
 
-### Testing Tools
+Attribution models determine how conversion credit is assigned across touchpoints. Use attribution data to optimize ads and growth channels.
 
-| Tool | Use For |
-|------|---------|
-| GA4 DebugView | Real-time event monitoring |
-| GTM Preview Mode | Test triggers before publish |
-| Browser Extensions | Tag Assistant, dataLayer Inspector |
+| Model | Use |
+|-------|-----|
+| **Data-driven** (GA4 default) | ML assigns credit by actual contribution; best for multi-touch journeys |
+| **Last-click** | 100% to final touchpoint; simple but undervalues awareness/consideration |
 
-### Validation Checklist
+**Optimization flow**: Clean UTM (source, medium, campaign) + conversion events → GA4 attribution reports → compare channels by attributed conversions → reallocate budget to ads/channels that drive results. Inconsistent UTM fragments data; multi-touch attribution requires reliable touchpoint data.
 
-- [ ] Events firing on correct triggers
-- [ ] Property values populating correctly
-- [ ] No duplicate events
-- [ ] Works across browsers and mobile
-- [ ] Conversions recorded correctly
-- [ ] No PII leaking
+**Reference**: [UTM.io – UTMs for Marketing Attribution](https://web.utm.io/blog/utms-for-marketing-attribution/), [GA4 – Get started with attribution](https://support.google.com/analytics/answer/10596866)
 
-### Common Issues
+## Testing & Validation
 
-| Issue | Check |
-|-------|-------|
-| Events not firing | Trigger config, GTM loaded |
-| Wrong values | Variable path, data layer structure |
-| Duplicate events | Multiple containers, trigger firing twice |
+| Tool | Use |
+|------|-----|
+| **Realtime** | See events as they fire |
+| **DebugView** | Detailed event/parameter inspection; requires debug mode |
+| **GA4 Debug mode** | `gtag('config', 'G-XXX', { 'debug_mode': true });` or GTM preview |
 
----
-
-## Privacy and Compliance
-
-### Considerations
-- Cookie consent required in EU/UK/CA
-- No PII in analytics properties
-- Data retention settings
-- User deletion capabilities
-
-### Implementation
-- Use consent mode (wait for consent)
-- IP anonymization
-- Only collect what you need
-- Integrate with consent management platform
-
----
+- Test before launch; verify parameters and naming
+- Check for duplicate events, missing values
 
 ## Output Format
 
-### Tracking Plan Document
-
-```markdown
-# [Site/Product] Tracking Plan
-
-## Overview
-- Tools: GA4, GTM
-- Last updated: [Date]
-
-## Events
-
-| Event Name | Description | Properties | Trigger |
-|------------|-------------|------------|---------|
-| signup_completed | User completes signup | method, plan | Success page |
-
-## Custom Dimensions
-
-| Name | Scope | Parameter |
-|------|-------|-----------|
-| user_type | User | user_type |
-
-## Conversions
-
-| Conversion | Event | Counting |
-|------------|-------|----------|
-| Signup | signup_completed | Once per session |
-```
-
----
-
-## Task-Specific Questions
-
-1. What tools are you using (GA4, Mixpanel, etc.)?
-2. What key actions do you want to track?
-3. What decisions will this data inform?
-4. Who implements - dev team or marketing?
-5. Are there privacy/consent requirements?
-6. What's already tracked?
-
----
-
-## Tool Integrations
-
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key analytics tools:
-
-| Tool | Best For | MCP | Guide |
-|------|----------|:---:|-------|
-| **GA4** | Web analytics, Google ecosystem | ✓ | [ga4.md](../../tools/integrations/ga4.md) |
-| **Mixpanel** | Product analytics, event tracking | - | [mixpanel.md](../../tools/integrations/mixpanel.md) |
-| **Amplitude** | Product analytics, cohort analysis | - | [amplitude.md](../../tools/integrations/amplitude.md) |
-| **PostHog** | Open-source analytics, session replay | - | [posthog.md](../../tools/integrations/posthog.md) |
-| **Segment** | Customer data platform, routing | - | [segment.md](../../tools/integrations/segment.md) |
-
----
+- **Event list** (name, trigger, parameters)
+- **Implementation** notes (gtag or GTM)
+- **Conversion** mapping
+- **Testing** checklist
 
 ## Related Skills
 
-- **ab-test-setup**: For experiment tracking
-- **seo-audit**: For organic traffic analysis
-- **page-cro**: For conversion optimization (uses this data)
+- **traffic-analysis**: UTM, source attribution; attribution for channel optimization
+- **ai-traffic-tracking**: AI traffic in GA4
+- **google-search-console**: GSC analysis (correlate with GA4)
+- **seo-monitoring**: Article database, benchmark, full SEO monitoring framework
